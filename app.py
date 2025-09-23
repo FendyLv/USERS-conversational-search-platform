@@ -4,7 +4,6 @@ import random
 
 app = Flask(__name__)
 
-
 # 生成任务分配结果
 def generate_task_assignments(n_users):
     # 任务类型定义
@@ -57,23 +56,30 @@ def generate_task_assignments(n_users):
                 create_task = task
                 break
 
+        # 随机决定任务出现的顺序
+        if random.random() < 0.5:  # 50%概率先评估后创造
+            task_order = [eval_task, create_task]
+            task_order_names = ["先评估后创造", "评估→创造"]
+        else:  # 50%概率先创造后评估
+            task_order = [create_task, eval_task]
+            task_order_names = ["先创造后评估", "创造→评估"]
+
         assignments[user_idx + 1] = {
             "user_id": user_idx + 1,
-            "tasks": [eval_task, create_task]
+            "tasks": task_order,
+            "order": task_order_names[0],
+            "order_symbol": task_order_names[1]
         }
 
     return assignments
-
 
 # 全局存储任务分配结果
 n_users = 200
 task_assignments = generate_task_assignments(n_users)
 
-
 @app.route('/')
 def index():
-    return render_template('index.html', n_users=n_users)
-
+    return render_template('tasks.html', n_users=n_users)
 
 @app.route('/tasks', methods=['POST'])
 def show_tasks():
@@ -88,11 +94,10 @@ def show_tasks():
             return render_template('error.html',
                                    message=f"找不到用户ID {user_id} 的任务")
 
-        return render_template('tasks.html', user=user_tasks)
+        return render_template('tasks.html', user=user_tasks, n_users=n_users)
     except ValueError:
         return render_template('error.html',
                                message="请输入有效的数字ID")
-
 
 if __name__ == '__main__':
     app.run(debug=True)
