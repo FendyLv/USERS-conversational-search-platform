@@ -879,16 +879,15 @@
                     <i class="fas fa-robot"></i> go AI
                 </a>
             </div>
-            <div class="task-card">
-                <div class="task-header">
-                    <div class="task-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div>
-                        <h2 id="task1-title">任务1: 评估-生活</h2>
-                        <p>用户ID: <span id="task1-userId">-</span></p>
-                    </div>
+            <div class="task-header">
+                <div class="task-icon">
+                    <i class="fas fa-search"></i>
                 </div>
+                <div>
+                    <h2 id="task1-title">任务1: 评估-生活</h2>
+                    <p>用户ID: <span id="task1-userId">-</span> | 顺序: <span id="task-order">-</span></p>
+                </div>
+            </div>
 
                 <div class="task-content">
                     <h3><i class="fas fa-question-circle"></i> 任务描述</h3>
@@ -993,16 +992,15 @@
                     <i class="fas fa-robot"></i> go AI
                 </a>
             </div>
-            <div class="task-card">
-                <div class="task-header">
-                    <div class="task-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div>
-                        <h2 id="task2-title">任务2: 创造-学习</h2>
-                        <p>用户ID: <span id="task2-userId">-</span></p>
-                    </div>
+            <div class="task-header">
+                <div class="task-icon">
+                    <i class="fas fa-lightbulb"></i>
                 </div>
+                <div>
+                    <h2 id="task2-title">任务2: 创造-学习</h2>
+                    <p>用户ID: <span id="task2-userId">-</span> | 顺序: <span id="task2-order">-</span></p>
+                </div>
+            </div>
 
                 <div class="task-content">
                     <h3><i class="fas fa-question-circle"></i> 任务描述</h3>
@@ -1200,7 +1198,7 @@
                     id: "eval-learn",
                     title: "评估-学习",
                     description: `<p><strong>DeepSeek和豆包相比哪个更好用？</strong></p>
-                                  <p>请从回复质量、响应速度、用户体验、特色功能等方面进行比较分析，并给出您的选择建议。</p>`,
+                                  <p>请从回答质量、用户体验、特色功能等方面进行比较分析，并给出您的选择建议。</p>`,
                     type: "评估"
                 },
                 {
@@ -1246,10 +1244,11 @@
         // 用户分配的任务
         let userTasks = {
             task1: null,
-            task2: null
+            task2: null,
+            order: "" // 添加任务顺序记录
         };
 
-        // 拉丁方格分配算法
+        // 拉丁方格分配算法（修复版本）
         function latinSquareAssignment(userId) {
             // 生成随机的评估任务索引 (0, 1, 2)
             const evalIndex = Math.floor(Math.random() * 3);
@@ -1260,10 +1259,24 @@
                 createIndex = Math.floor(Math.random() * 3);
             } while (createIndex === evalIndex); // 确保评估和创造任务不同
 
-            return {
-                task1: tasks.eval[evalIndex],
-                task2: tasks.create[createIndex]
-            };
+            // 随机决定任务出现的顺序（50%概率）
+            const shouldReverseOrder = Math.random() < 0.5;
+
+            if (shouldReverseOrder) {
+                // 先创造后评估
+                return {
+                    task1: tasks.create[createIndex],
+                    task2: tasks.eval[evalIndex],
+                    order: "先创造后评估"
+                };
+            } else {
+                // 先评估后创造（默认顺序）
+                return {
+                    task1: tasks.eval[evalIndex],
+                    task2: tasks.create[createIndex],
+                    order: "先评估后创造"
+                };
+            }
         }
 
         // 初始化
@@ -1286,20 +1299,40 @@
                 lastUserId = parseInt(userId);
 
                 // 使用拉丁方格算法分配任务
-                userTasks = latinSquareAssignment(userId);
+                const assignmentResult = latinSquareAssignment(userId);
+                userTasks = assignmentResult; // 直接赋值，包含task1、task2和order
 
                 // 设置用户ID显示
                 task1UserId.textContent = userId;
                 task2UserId.textContent = userId;
                 completedUserId.textContent = userId;
 
+                // 设置任务顺序显示
+                document.getElementById('task-order').textContent = userTasks.order;
+
                 // 设置任务1内容
                 document.getElementById('task1-title').textContent = `任务1: ${userTasks.task1.title}`;
                 document.getElementById('task1-description').innerHTML = userTasks.task1.description;
 
+                // 根据任务类型设置任务1图标
+                const task1Icon = document.querySelector('#step1 .task-icon i');
+                if (userTasks.task1.type === '评估') {
+                    task1Icon.className = 'fas fa-search';
+                } else {
+                    task1Icon.className = 'fas fa-lightbulb';
+                }
+
                 // 设置任务2内容
                 document.getElementById('task2-title').textContent = `任务2: ${userTasks.task2.title}`;
                 document.getElementById('task2-description').innerHTML = userTasks.task2.description;
+
+                // 根据任务类型设置任务2图标
+                const task2Icon = document.querySelector('#step2 .task-icon i');
+                if (userTasks.task2.type === '评估') {
+                    task2Icon.className = 'fas fa-search';
+                } else {
+                    task2Icon.className = 'fas fa-lightbulb';
+                }
 
                 // 记录任务1开始时间
                 task1StartTime = new Date();
@@ -1562,10 +1595,11 @@
 
             const sessionData = {
                 userId: userId,
+                taskOrder: userTasks.order,  // 保存任务顺序
                 task1: {
                     taskId: userTasks.task1.id,
                     title: userTasks.task1.title,
-                    type: userTasks.task1.type,
+                    type: userTasks.task1.type,  // 保存任务类型
                     description: userTasks.task1.description,
                     answer: document.getElementById('task1-answer').value,
                     ratings: {...task1Ratings},
@@ -1575,7 +1609,7 @@
                 task2: {
                     taskId: userTasks.task2.id,
                     title: userTasks.task2.title,
-                    type: userTasks.task2.type,
+                    type: userTasks.task2.type,  // 保存任务类型
                     description: userTasks.task2.description,
                     answer: document.getElementById('task2-answer').value,
                     ratings: {...task2Ratings},
@@ -1584,11 +1618,14 @@
                 },
                 completedAt: new Date().toISOString()
             };
-            // 添加发送数据到Python后端的代码
-            sendDataToPython(sessionData);
+
             userSessions.push(sessionData);
             console.log('用户会话数据已保存:', sessionData);
+
+            // 发送数据到Python后端
+            sendDataToPython(sessionData);
         }
+
         // 新增发送数据到Python后端
         function sendDataToPython(data) {
             // 使用WebSocket发送数据
@@ -1608,6 +1645,7 @@
                 console.log('WebSocket连接已关闭');
             };
         }
+
         // 渲染收集的数据
         function renderCollectedData() {
             const dataContent = document.getElementById('dataContent');
@@ -1626,6 +1664,7 @@
                 sessionElement.innerHTML = `
                     <div class="session-header">
                         <span><i class="fas fa-user"></i> 用户ID: ${session.userId}</span>
+                        <span>顺序: ${session.taskOrder}</span>
                         <span>${new Date(session.completedAt).toLocaleString()}</span>
                     </div>
 
@@ -1813,7 +1852,8 @@
             // 重置任务分配
             userTasks = {
                 task1: null,
-                task2: null
+                task2: null,
+                order: ""
             };
 
             // 重置进度
@@ -1829,5 +1869,4 @@
         }
     </script>
 </body>
-
 </html>
