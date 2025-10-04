@@ -21,9 +21,7 @@ def start_websocket_server():
                 print(f"  - 标题: {t1['title']}")
                 print(f"  - 类型: {t1['type']}")
                 print(f"  - 答案：{t1['answer']}")
-                print(f"  - 用时: 答题{t1['answerTime']}秒, 评分{t1['ratingTime']}秒")
-                print(f"  - 评分: 理解{t1['ratings']['understanding']}, 相关{t1['ratings']['relevance']}, " +
-                      f"质量{t1['ratings']['quality']}, 响应{t1['ratings']['responsiveness']}")
+                print(f"  - 用时: 答题{t1['answerTime']}秒")
 
                 # 打印任务2数据
                 t2 = data['task2']
@@ -31,9 +29,7 @@ def start_websocket_server():
                 print(f"  - 标题: {t2['title']}")
                 print(f"  - 类型: {t2['type']}")
                 print(f"  - 答案：{t2['answer']}")
-                print(f"  - 用时: 答题{t2['answerTime']}秒, 评分{t2['ratingTime']}秒")
-                print(f"  - 评分: 理解{t2['ratings']['understanding']}, 相关{t2['ratings']['relevance']}, " +
-                      f"质量{t2['ratings']['quality']}, 响应{t2['ratings']['responsiveness']}")
+                print(f"  - 用时: 答题{t2['answerTime']}秒")
 
                 print("=" * 50 + "\n")
         except Exception as e:

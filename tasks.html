@@ -391,88 +391,36 @@
             border-radius: 10px;
         }
 
-        /* 评分部分 */
-        .rating-section {
+        /* 问卷提示部分 */
+        .questionnaire-section {
             background: #f9f9f9;
-            padding: 30px;
+            padding: 60px 40px;
             border-radius: 10px;
             margin: 30px 0;
             border: 1px solid #eee;
+            text-align: center;
         }
 
-        .rating-title {
+        .questionnaire-title {
             text-align: center;
             margin-bottom: 30px;
             color: var(--dark);
         }
 
-        .rating-title h3 {
+        .questionnaire-title h3 {
             margin-bottom: 10px;
-        }
-
-        .rating-title p {
-            color: var(--gray);
-        }
-
-        /* 星级说明 */
-        .rating-scale-info {
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(243, 156, 18, 0.1);
-            border-radius: 8px;
-            font-weight: 600;
-            color: var(--warning);
-        }
-
-        .rating-criteria {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .rating-item {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .rating-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .rating-item h4 {
-            margin-bottom: 15px;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .rating-item i {
-            color: var(--warning);
-        }
-
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .star {
             font-size: 2rem;
-            color: #ddd;
-            cursor: pointer;
-            transition: var(--transition);
         }
 
-        .star:hover, .star.active {
-            color: var(--warning);
-            transform: scale(1.1);
+        .questionnaire-title p {
+            color: var(--gray);
+            font-size: 1.2rem;
+        }
+
+        .questionnaire-icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
         }
 
         /* 完成界面 */
@@ -544,10 +492,6 @@
                 padding: 25px;
             }
 
-            .rating-criteria {
-                grid-template-columns: 1fr;
-            }
-
             .task-header {
                 flex-direction: column;
                 text-align: center;
@@ -560,6 +504,14 @@
             .answer-textarea {
                 min-height: 300px;
                 font-size: 1.05rem;
+            }
+
+            .questionnaire-section {
+                padding: 40px 20px;
+            }
+
+            .questionnaire-title h3 {
+                font-size: 1.5rem;
             }
         }
 
@@ -845,8 +797,8 @@
 
                 <div class="info-card">
                     <i class="fas fa-star"></i>
-                    <h3>AI评分系统</h3>
-                    <p>每个任务提交后，对AI提供的答案进行四个维度的满意度评分</p>
+                    <h3>使用体验收集</h3>
+                    <p>完成任务后，请填写使用体验问卷帮助我们改进服务质量</p>
                 </div>
 
                 <div class="info-card">
@@ -863,7 +815,7 @@
                 </div>
 
                 <div class="data-collection-message">
-                    <i class="fas fa-info-circle"></i> 您提交的所有答案和评分将被安全存储，仅用于研究目的
+                    <i class="fas fa-info-circle"></i> 您提交的所有答案将被安全存储，仅用于研究目的
                 </div>
 
                 <button class="btn btn-block" id="startBtn">
@@ -913,74 +865,23 @@
             </div>
         </div>
 
-        <!-- 步骤1.5：任务1评分界面 -->
-        <div class="card step" id="step1-rating">
-            <div class="rating-section">
-                <div class="rating-title">
-                    <h3><i class="fas fa-star"></i> 请为AI提供的答案评分</h3>
-                    <p>您的反馈将帮助我们改进AI服务质量</p>
-                    <div class="rating-scale-info">
-                        <i class="fas fa-info-circle"></i>
-                        评分说明：1星（非常不同意）→ 5星（非常同意）
-                    </div>
+        <!-- 步骤1.5：任务1问卷提示界面 -->
+        <div class="card step" id="step1-questionnaire">
+            <div class="questionnaire-section">
+                <div class="questionnaire-icon">
+                    <i class="fas fa-clipboard-check"></i>
                 </div>
-
-                <div class="rating-criteria">
-                    <div class="rating-item">
-                        <h4><i class="fas fa-comments"></i> AI能够理解我的问题</h4>
-                        <p>AI是否准确理解了您的问题意图？</p>
-                        <div class="stars" data-category="understanding">
-                            <div class="star" data-rating="1">★</div>
-                            <div class="star" data-rating="2">★</div>
-                            <div class="star" data-rating="3">★</div>
-                            <div class="star" data-rating="4">★</div>
-                            <div class="star" data-rating="5">★</div>
-                        </div>
-                    </div>
-
-                    <div class="rating-item">
-                        <h4><i class="fas fa-search"></i> AI找到的信息相关性高</h4>
-                        <p>AI提供的信息是否与您的问题高度相关？</p>
-                        <div class="stars" data-category="relevance">
-                            <div class="star" data-rating="1">★</div>
-                            <div class="star" data-rating="2">★</div>
-                            <div class="star" data-rating="3">★</div>
-                            <div class="star" data-rating="4">★</div>
-                            <div class="star" data-rating="5">★</div>
-                        </div>
-                    </div>
-
-                    <div class="rating-item">
-                        <h4><i class="fas fa-graduation-cap"></i> AI提供的回答质量高</h4>
-                        <p>AI的回答是否全面、准确、有深度？</p>
-                        <div class="stars" data-category="quality">
-                            <div class="star" data-rating="1">★</div>
-                            <div class="star" data-rating="2">★</div>
-                            <div class="star" data-rating="3">★</div>
-                            <div class="star" data-rating="4">★</div>
-                            <div class="star" data-rating="5">★</div>
-                        </div>
-                    </div>
-
-                    <div class="rating-item">
-                        <h4><i class="fas fa-bolt"></i> AI响应及时</h4>
-                        <p>AI是否在合理时间内提供了回答？</p>
-                        <div class="stars" data-category="responsiveness">
-                            <div class="star" data-rating="1">★</div>
-                            <div class="star" data-rating="2">★</div>
-                            <div class="star" data-rating="3">★</div>
-                            <div class="star" data-rating="4">★</div>
-                            <div class="star" data-rating="5">★</div>
-                        </div>
-                    </div>
+                <div class="questionnaire-title">
+                    <h3>请完成使用体验问卷~</h3>
+                    <p>您的反馈对我们非常重要</p>
                 </div>
 
                 <div class="data-collection-message">
-                    <i class="fas fa-chart-bar"></i> 您的评分数据将用于改善AI服务质量
+                    <i class="fas fa-chart-bar"></i> 您的使用体验将用于改善服务质量
                 </div>
 
-                <button class="btn btn-block" id="submitRating1Btn">
-                    <i class="fas fa-check-circle"></i> 提交评分并继续
+                <button class="btn btn-block" id="continueQuestionnaire1Btn">
+                    <i class="fas fa-arrow-right"></i> 继续下一个任务
                 </button>
             </div>
         </div>
@@ -1026,74 +927,23 @@
             </div>
         </div>
 
-        <!-- 步骤2.5：任务2评分界面 -->
-        <div class="card step" id="step2-rating">
-            <div class="rating-section">
-                <div class="rating-title">
-                    <h3><i class="fas fa-star"></i> 请为AI提供的答案评分</h3>
-                    <p>您的反馈将帮助我们改进AI服务质量</p>
-                    <div class="rating-scale-info">
-                        <i class="fas fa-info-circle"></i>
-                        评分说明：1星（非常不同意）→ 5星（非常同意）
-                    </div>
+        <!-- 步骤2.5：任务2问卷提示界面 -->
+        <div class="card step" id="step2-questionnaire">
+            <div class="questionnaire-section">
+                <div class="questionnaire-icon">
+                    <i class="fas fa-clipboard-check"></i>
                 </div>
-
-                <div class="rating-criteria">
-                    <div class="rating-item">
-                        <h4><i class="fas fa-comments"></i> AI能够理解我的问题</h4>
-                        <p>AI是否准确理解了您的问题意图？</p>
-                        <div class="stars" data-category="understanding">
-                            <div class="star" data-rating="1">★</div>
-                            <div class="star" data-rating="2">★</div>
-                            <div class="star" data-rating="3">★</div>
-                            <div class="star" data-rating="4">★</div>
-                            <div class="star" data-rating="5">★</div>
-                        </div>
-                    </div>
-
-                    <div class="rating-item">
-                        <h4><i class="fas fa-search"></i> AI找到的信息相关性高</h4>
-                        <p>AI提供的信息是否与您的问题高度相关？</p>
-                        <div class="stars" data-category="relevance">
-                            <div class="star" data-rating="1">★</div>
-                            <div class="star" data-rating="2">★</div>
-                            <div class="star" data-rating="3">★</div>
-                            <div class="star" data-rating="4">★</div>
-                            <div class="star" data-rating="5">★</div>
-                        </div>
-                    </div>
-
-                    <div class="rating-item">
-                        <h4><i class="fas fa-graduation-cap"></i> AI提供的回答质量高</h4>
-                        <p>AI的回答是否全面、准确、有深度？</p>
-                        <div class="stars" data-category="quality">
-                            <div class="star" data-rating="1">★</div>
-                            <div class="star" data-rating="2">★</div>
-                            <div class="star" data-rating="3">★</div>
-                            <div class="star" data-rating="4">★</div>
-                            <div class="star" data-rating="5">★</div>
-                        </div>
-                    </div>
-
-                    <div class="rating-item">
-                        <h4><i class="fas fa-bolt"></i> AI响应及时</h4>
-                        <p>AI是否在合理时间内提供了回答？</p>
-                        <div class="stars" data-category="responsiveness">
-                            <div class="star" data-rating="1">★</div>
-                            <div class="star" data-rating="2">★</div>
-                            <div class="star" data-rating="3">★</div>
-                            <div class="star" data-rating="4">★</div>
-                            <div class="star" data-rating="5">★</div>
-                        </div>
-                    </div>
+                <div class="questionnaire-title">
+                    <h3>请完成使用体验问卷~</h3>
+                    <p>您的反馈对我们非常重要</p>
                 </div>
 
                 <div class="data-collection-message">
-                    <i class="fas fa-chart-bar"></i> 您的评分数据将用于改善AI服务质量
+                    <i class="fas fa-chart-bar"></i> 您的使用体验将用于改善服务质量
                 </div>
 
-                <button class="btn btn-block" id="submitRating2Btn">
-                    <i class="fas fa-check-circle"></i> 提交评分并继续
+                <button class="btn btn-block" id="continueQuestionnaire2Btn">
+                    <i class="fas fa-check-circle"></i> 完成所有任务
                 </button>
             </div>
         </div>
@@ -1107,7 +957,7 @@
 
                 <div class="completion-message">
                     <h2>任务完成！</h2>
-                    <p>您已成功完成所有分配任务并提交了评分，感谢您的参与！系统将在5秒后自动返回初始界面，或者您可以点击下方按钮立即返回。</p>
+                    <p>您已成功完成所有分配任务，感谢您的参与！系统将在5秒后自动返回初始界面，或者您可以点击下方按钮立即返回。</p>
                     <p><strong>您的数据已安全存储：</strong>用户ID: <span id="completed-userId"></span></p>
                 </div>
 
@@ -1151,7 +1001,7 @@
     <script>
         // 当前步骤状态管理
         let currentStep = 0;
-        const steps = ['step0', 'step1', 'step1-rating', 'step2', 'step2-rating', 'step3'];
+        const steps = ['step0', 'step1', 'step1-questionnaire', 'step2', 'step2-questionnaire', 'step3'];
         const progressIndicators = ['step0-indicator', 'step1-indicator', 'step2-indicator', 'step3-indicator'];
         const userIdInput = document.getElementById('userId');
         const task1UserId = document.getElementById('task1-userId');
@@ -1173,23 +1023,8 @@
         let lastUserId = 0;
 
         // 计时器变量
-        let task1StartTime, task1EndTime, task1RatingStartTime, task1RatingEndTime;
-        let task2StartTime, task2EndTime, task2RatingStartTime, task2RatingEndTime;
-
-        // 评分数据
-        let task1Ratings = {
-            understanding: 0,
-            relevance: 0,
-            quality: 0,
-            responsiveness: 0
-        };
-
-        let task2Ratings = {
-            understanding: 0,
-            relevance: 0,
-            quality: 0,
-            responsiveness: 0
-        };
+        let task1StartTime, task1EndTime;
+        let task2StartTime, task2EndTime;
 
         // 任务定义
         const tasks = {
@@ -1197,22 +1032,22 @@
                 {
                     id: "eval-learn",
                     title: "评估-学习",
-                    description: `<p><strong>DeepSeek和豆包相比哪个更好用？</strong></p>
-                                  <p>请从回答质量、用户体验、特色功能等方面进行比较分析，并给出您的选择建议。</p>`,
+                    description: `<p><strong>求助！DeepSeek和豆包相比哪个更好用？</strong></p>
+                                  <p>请想象一位您的同事、好友或家人遇到需要使用大模型的场合，他/她向你请教是推荐使用DeepSeek还是豆包，请问您会给出怎样的答案？当然了，为了能够更好地帮助到您的同事、朋友、家人，希望您能够尽可能提供有力的依据，来支持您的建议。可以从回答质量、用户体验、特色功能、使用场景等方面进行比较分析，并结合您的经验，给出您的建议。</p>`,
                     type: "评估"
                 },
                 {
                     id: "eval-life",
                     title: "评估-生活",
-                    description: `<p><strong>选择哪一款国产品牌的洗衣液性价比高？</strong></p>
-                                  <p>请比较至少三个国产品牌洗衣液的以下方面：价格、清洁效果、环保性、香味持久度。基于您的比较，推荐一款性价比最高的产品并说明理由。</p>`,
+                    description: `<p><strong>选择哪一款洗衣液好呢？</strong></p>
+                                  <p>假如您的洗衣液正好用完，之前使用的洗衣液也突然断货，需要购入新的洗衣液，如何选择出新的让人满意的洗衣液？请比较至少三个品牌的洗衣液，可以从您关心的价格、清洁效果、环保性、香味持久度等方面进行考虑，基于您的比较，最终确定一款您最满意的产品，并说明理由。</p>`,
                     type: "评估"
                 },
                 {
                     id: "eval-work",
                     title: "评估-工作",
-                    description: `<p><strong>请列举2个你认为最有效的绩效管理指标，并说明理由。</strong></p>
-                                  <p>这些指标应适用于大多数行业，并具有可量化、公平性强的特点。</p>`,
+                    description: `<p><strong>工作汇报：最有效的绩效管理指标。</strong></p>
+                                  <p>作为一名管理专业的学生，你被邀请为不同行业的人员准备一次关于绩效管理指标的演讲培训，你需要准备相应的资料并进行汇报，这些指标应适用于大多数行业，并具有可量化、公平性强等特点。请列举2个你认为最有效的绩效管理指标，并说明理由。</p>`,
                     type: "评估"
                 }
             ],
@@ -1220,22 +1055,22 @@
                 {
                     id: "create-learn",
                     title: "创造-学习",
-                    description: `<p><strong>《中国美术史》小组报告选题</strong></p>
-                                  <p>假设这学期你选择了《中国美术史》这门课程，请提出一个可行的小组报告选题，并列出简要框架。选题应具有研究价值且能在20分钟展示时间内充分呈现。</p>`,
+                    description: `<p><strong>《中国美术史》报告选题</strong></p>
+                                  <p>假设这学期你选择了《中国美术史》这门课程，现在到了个人汇报的环节，授课讲师要求每人选择一个与课程内容相关的选题进行展示汇报，选题应具有研究价值且能在20分钟展示时间内充分呈现。请提出一个可行的报告选题，并列出简要框架。</p>`,
                     type: "创造"
                 },
                 {
                     id: "create-life",
                     title: "创造-生活",
                     description: `<p><strong>黄鹤楼一日出行计划</strong></p>
-                                  <p>假如你周末想前往黄鹤楼及周边游玩，请提供一个一日出行计划。包括时间安排、交通方式、景点游览顺序、餐饮建议等。</p>`,
+                                  <p>假如你的外地朋友在周末来武汉游玩，你们计划一同前往黄鹤楼及周边，需要做一些简单的攻略，请提供一个一日出行计划。包括时间安排、交通方式、景点游览顺序、餐饮建议等。</p>`,
                     type: "创造"
                 },
                 {
                     id: "create-work",
                     title: "创造-工作",
                     description: `<p><strong>母亲节购物推送</strong></p>
-                                  <p>请以母亲节为主题，完成一篇150字以内吸引用户的购物推送。要求包含情感元素、产品推荐和促销信息，能引发用户共鸣并促进消费。</p>`,
+                                  <p>在母亲节快要来临之际，你作为小红书某账号的运营工作人员，需要以母亲节为主题，完成一篇150字以内吸引用户的购物推送（可以选择您感兴趣的任何类型产品）。要求包含情感元素、产品推荐和促销信息，能引发用户共鸣并促进消费。</p>`,
                     type: "创造"
                 }
             ]
@@ -1270,7 +1105,7 @@
                     order: "先创造后评估"
                 };
             } else {
-                // 先评估后创造（默认顺序）
+                // 先评估后创造
                 return {
                     task1: tasks.eval[evalIndex],
                     task2: tasks.create[createIndex],
@@ -1353,19 +1188,8 @@
                 showConfirmationDialog();
             });
 
-            // 任务1评分提交
-            document.getElementById('submitRating1Btn').addEventListener('click', function() {
-                if (!validateRating(task1Ratings)) {
-                    alert('请完成所有评分项后再提交！');
-                    return;
-                }
-
-                // 记录任务1评分结束时间
-                task1RatingEndTime = new Date();
-
-                // 保存任务1评分
-                saveTaskRating(userIdInput.value, userTasks.task1, task1Ratings);
-
+            // 任务1问卷继续
+            document.getElementById('continueQuestionnaire1Btn').addEventListener('click', function() {
                 // 记录任务2开始时间
                 task2StartTime = new Date();
 
@@ -1385,19 +1209,8 @@
                 showConfirmationDialog();
             });
 
-            // 任务2评分提交
-            document.getElementById('submitRating2Btn').addEventListener('click', function() {
-                if (!validateRating(task2Ratings)) {
-                    alert('请完成所有评分项后再提交！');
-                    return;
-                }
-
-                // 记录任务2评分结束时间
-                task2RatingEndTime = new Date();
-
-                // 保存任务2评分
-                saveTaskRating(userIdInput.value, userTasks.task2, task2Ratings);
-
+            // 任务2问卷完成
+            document.getElementById('continueQuestionnaire2Btn').addEventListener('click', function() {
                 // 创建并保存完整用户会话数据
                 saveUserSession(userIdInput.value);
 
@@ -1408,9 +1221,6 @@
             document.getElementById('returnBtn').addEventListener('click', function() {
                 resetSystem();
             });
-
-            // 初始化星级评分
-            initRating();
 
             // 数据面板切换
             document.getElementById('dataToggleBtn').addEventListener('click', function() {
@@ -1457,9 +1267,6 @@
                 // 保存任务1答案
                 saveTaskAnswer(userId, task, answer);
 
-                // 记录任务1评分开始时间
-                task1RatingStartTime = new Date();
-
                 navigateToStep(2);
             } else if (currentTaskToSubmit === 'task2') {
                 answer = document.getElementById('task2-answer').value;
@@ -1470,9 +1277,6 @@
 
                 // 保存任务2答案
                 saveTaskAnswer(userId, task, answer);
-
-                // 记录任务2评分开始时间
-                task2RatingStartTime = new Date();
 
                 navigateToStep(4);
             }
@@ -1517,40 +1321,6 @@
             });
         }
 
-        // 初始化评分系统
-        function initRating() {
-            // 绑定所有星星的点击事件
-            document.querySelectorAll('.stars').forEach(starsContainer => {
-                const stars = starsContainer.querySelectorAll('.star');
-                const category = starsContainer.getAttribute('data-category');
-
-                stars.forEach((star, starIndex) => {
-                    star.addEventListener('click', function() {
-                        // 重置当前容器中的所有星星
-                        stars.forEach(s => s.classList.remove('active'));
-
-                        // 激活选中的星星
-                        for (let i = 0; i <= starIndex; i++) {
-                            stars[i].classList.add('active');
-                        }
-
-                        // 确定当前评分属于哪个任务
-                        let ratingsObj;
-                        if (starsContainer.closest('#step1-rating')) {
-                            ratingsObj = task1Ratings;
-                        } else if (starsContainer.closest('#step2-rating')) {
-                            ratingsObj = task2Ratings;
-                        } else {
-                            return;
-                        }
-
-                        // 更新评分数据
-                        ratingsObj[category] = starIndex + 1;
-                    });
-                });
-            });
-        }
-
         // 保存任务答案
         function saveTaskAnswer(userId, task, answer) {
             const timestamp = new Date().toISOString();
@@ -1568,30 +1338,11 @@
             console.log('任务答案已保存:', collectedData[collectedData.length - 1]);
         }
 
-        // 保存任务评分
-        function saveTaskRating(userId, task, ratings) {
-            const timestamp = new Date().toISOString();
-
-            collectedData.push({
-                type: 'rating',
-                userId: userId,
-                taskId: task.id,
-                taskTitle: task.title,
-                taskType: task.type,
-                ratings: {...ratings},
-                timestamp: timestamp
-            });
-
-            console.log('任务评分已保存:', collectedData[collectedData.length - 1]);
-        }
-
         // 保存完整用户会话数据
         function saveUserSession(userId) {
             // 计算任务用时（秒）
             const task1AnswerTime = Math.round((task1EndTime - task1StartTime) / 1000);
-            const task1RatingTime = Math.round((task1RatingEndTime - task1RatingStartTime) / 1000);
             const task2AnswerTime = Math.round((task2EndTime - task2StartTime) / 1000);
-            const task2RatingTime = Math.round((task2RatingEndTime - task2RatingStartTime) / 1000);
 
             const sessionData = {
                 userId: userId,
@@ -1602,9 +1353,7 @@
                     type: userTasks.task1.type,  // 保存任务类型
                     description: userTasks.task1.description,
                     answer: document.getElementById('task1-answer').value,
-                    ratings: {...task1Ratings},
-                    answerTime: task1AnswerTime,
-                    ratingTime: task1RatingTime
+                    answerTime: task1AnswerTime
                 },
                 task2: {
                     taskId: userTasks.task2.id,
@@ -1612,9 +1361,7 @@
                     type: userTasks.task2.type,  // 保存任务类型
                     description: userTasks.task2.description,
                     answer: document.getElementById('task2-answer').value,
-                    ratings: {...task2Ratings},
-                    answerTime: task2AnswerTime,
-                    ratingTime: task2RatingTime
+                    answerTime: task2AnswerTime
                 },
                 completedAt: new Date().toISOString()
             };
@@ -1674,15 +1421,8 @@
                         </div>
                         <div class="task-description">${session.task1.description}</div>
                         <div class="task-answer">${session.task1.answer}</div>
-                        <div class="rating-summary">
-                            <span>理解: <span class="rating-value">${session.task1.ratings.understanding}</span>/5</span>
-                            <span>相关: <span class="rating-value">${session.task1.ratings.relevance}</span>/5</span>
-                            <span>质量: <span class="rating-value">${session.task1.ratings.quality}</span>/5</span>
-                            <span>响应: <span class="rating-value">${session.task1.ratings.responsiveness}</span>/5</span>
-                        </div>
                         <div class="task-timing">
                             <span>答题用时: ${session.task1.answerTime}秒</span>
-                            <span>评价用时: ${session.task1.ratingTime}秒</span>
                         </div>
                     </div>
 
@@ -1692,15 +1432,8 @@
                         </div>
                         <div class="task-description">${session.task2.description}</div>
                         <div class="task-answer">${session.task2.answer}</div>
-                        <div class="rating-summary">
-                            <span>理解: <span class="rating-value">${session.task2.ratings.understanding}</span>/5</span>
-                            <span>相关: <span class="rating-value">${session.task2.ratings.relevance}</span>/5</span>
-                            <span>质量: <span class="rating-value">${session.task2.ratings.quality}</span>/5</span>
-                            <span>响应: <span class="rating-value">${session.task2.ratings.responsiveness}</span>/5</span>
-                        </div>
                         <div class="task-timing">
                             <span>答题用时: ${session.task2.answerTime}秒</span>
-                            <span>评价用时: ${session.task2.ratingTime}秒</span>
                         </div>
                     </div>
                 `;
@@ -1802,16 +1535,6 @@
             progressFill.style.width = `${progress}%`;
         }
 
-        // 验证评分是否完成
-        function validateRating(ratings) {
-            for (const key in ratings) {
-                if (ratings[key] === 0) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         // 重置系统
         function resetSystem() {
             // 清除自动返回定时器
@@ -1828,26 +1551,6 @@
             // 重置字符计数器
             document.getElementById('task1-counter').textContent = '0/1000';
             document.getElementById('task2-counter').textContent = '0/1000';
-
-            // 重置评分
-            task1Ratings = {
-                understanding: 0,
-                relevance: 0,
-                quality: 0,
-                responsiveness: 0
-            };
-
-            task2Ratings = {
-                understanding: 0,
-                relevance: 0,
-                quality: 0,
-                responsiveness: 0
-            };
-
-            // 重置星星
-            document.querySelectorAll('.star').forEach(star => {
-                star.classList.remove('active');
-            });
 
             // 重置任务分配
             userTasks = {
