@@ -4,7 +4,7 @@
  后端.py将用户交互数据实时记录下来，需要在打开平台后同步打开以记录用户行为 <br>
 *更新 评估类和创造类的任务出现先后顺序随机
 
-Experimental local platform code for conversational search, containing six tasks randomly assigned using the Latin square method, divided into evaluation and Creativity, and the two dimensions of Life/Study/Work. Users click the “Go AI” button to navigate to ChatGPT and, with its assistance, complete one evaluation task and one creativity task. After completion, they rate their experience with the AI. The platform records the user ID (automatically generated as the next user ID + 1), input data, input time, rating data, and rating time
- organize.py contains code to organize data exported from the platform into a CSV file 
- backend.py records user interaction data in real time; it must be opened simultaneously with the platform to track user behavior <br>
+Experimental local platform code for conversational search, containing six tasks randomly assigned using the Latin square method, divided into evaluation and Creativity, and the two dimensions of Life/Study/Work. Users click the “Go AI” button to navigate to ChatGPT and, with its assistance, complete one evaluation task and one creativity task. After completion, they rate their experience with the AI. The platform records the user ID (automatically generated as the next user ID + 1), input data, input time, rating data, and rating time <br>
+ organize.py contains code to organize data exported from the platform into a CSV file <br>
+backend.py records user interaction data in real time; it must be opened simultaneously with the platform to track user behavior <br>
 *Update: The order in which evaluation and creative tasks appear is now randomized
