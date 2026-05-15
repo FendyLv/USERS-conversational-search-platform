@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任务分配系统</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>任务分配系统</h1>
+            <p>基于拉丁方阵的随机任务分配</p>
+        </header>
+
+        <main class="card">
+            <h2>查看您的任务</h2>
+            <p>请输入您的用户ID（1-{{ n_users }}之间的数字）：</p>
+
+            <form action="/tasks" method="post">
+                <div class="form-group">
+                    <label for="user_id">用户ID：</label>
+                    <input type="number" id="user_id" name="user_id"
+                           min="1" max="{{ n_users }}" required>
+                </div>
+                <button type="submit" class="btn">查看任务</button>
+            </form>
+
+            <div class="info-box">
+                <h3>关于任务分配</h3>
+                <p>系统使用拉丁方阵算法确保：</p>
+                <ul>
+                    <li>每个用户获得一个"评估类"和一个"创造类"任务</li>
+                    <li>任务在生活、学习、工作三个方面均衡分配</li>
+                    <li>分配结果完全随机且公平</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 任务分配系统 | 基于拉丁方阵算法</p>
+        </footer>
+    </div>
+</body>
+</html>

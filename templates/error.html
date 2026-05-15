@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>出错了</h1>
+        </header>
+
+        <main class="card error-card">
+            <div class="error-icon">⚠️</div>
+            <h2>无法获取任务信息</h2>
+            <p class="error-message">{{ message }}</p>
+            <a href="/" class="btn">返回首页</a>
+        </main>
+
+        <footer>
+            <p>© 2023 任务分配系统 | 错误处理</p>
+        </footer>
+    </div>
+</body>
+</html>
